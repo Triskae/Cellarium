@@ -1,11 +1,14 @@
 package controlers;
 
+import bdd.Connexion;
 import classes.Attribut;
 import classes.Couleurs;
 import classes.Wine;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import org.controlsfx.control.textfield.TextFields;
 import util.CellariumUtil;
+import util.QueryUtil;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -22,8 +26,6 @@ import java.util.ResourceBundle;
 
 public class AddWineControler implements Initializable{
 
-    public JFXComboBox fieldApp;
-    public JFXTextField fieldDegre;
     @FXML
     private JFXButton btnLinkBottle;
 
@@ -37,7 +39,7 @@ public class AddWineControler implements Initializable{
     private JFXComboBox fieldRegion;
 
     @FXML
-    private JFXComboBox fieldAppellation;
+    private JFXComboBox fieldApp;
 
     @FXML
     private JFXComboBox fieldCouleur;
@@ -46,33 +48,44 @@ public class AddWineControler implements Initializable{
     private JFXTextField fieldCepages;
 
     @FXML
-    private JFXButton buttonValider;
-
-    @FXML
     private Label lblStatus;
 
     @FXML
-    private StackPane stackPaneAddBottle;
+    private JFXTextField fieldDegre;
 
     private static String barcode;
 
     @FXML
-    void addWine(ActionEvent event) {
-        if (verifChamps()) {
+    void addWine(ActionEvent event) throws SQLException {
+        /*if (verifChamps()) {
             Wine w = new Wine(
                     fieldDomaine.getText(),
-                    fieldAppellation.getValue().toString(),
+                    fieldApp.getValue().toString(),
                     fieldCouleur.getValue().toString(),
                     fieldCepages.getText(),
                     Float.parseFloat(fieldDegre.getText())
             );
+
+            System.out.println(w);
+
+            Connexion.insertWine(w);
 
             afficherLabel("#388e3c", "La bouteille a bien été ajoutée");
 
             resetFields(new ActionEvent());
         } else {
             afficherLabel("#d32f2f", "Veuillez remplir tous les champs");
-        }
+        }*/
+
+        Wine w = new Wine(
+                fieldDomaine.getText(),
+                fieldApp.getValue().toString(),
+                fieldCouleur.getValue().toString(),
+                fieldCepages.getText(),
+                Float.parseFloat(fieldDegre.getText())
+        );
+
+        Connexion.insertWine(w);
     }
 
     @FXML
@@ -87,11 +100,18 @@ public class AddWineControler implements Initializable{
     }
 
     private boolean verifChamps() {
+        System.out.println(fieldDomaine.getText());
+        System.out.println(fieldRegion.getValue());
+        System.out.println(fieldApp.getValue());
+        System.out.println(fieldCouleur.getValue());
+        System.out.println(fieldCepages.getText());
+        System.out.println(fieldDegre.getText());
         return !(fieldDomaine.getText().isEmpty()
                 || fieldRegion.getValue() == null
-                || fieldAppellation.getValue() == null
+                || fieldApp.getValue() == null
                 || fieldCouleur.getValue() == null
-                || fieldCepages.getText() == null);
+                || fieldCepages.getText() == null
+                || fieldDegre.getText() == null);
     }
 
     private void afficherLabel(String color, String message) {
@@ -103,6 +123,16 @@ public class AddWineControler implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        fieldDegre.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    fieldDegre.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
 
         try {
             System.out.println(Attribut.getAppFromReg("Bordeaux").get(1));
@@ -123,7 +153,6 @@ public class AddWineControler implements Initializable{
 
         CellariumUtil.sortClearBOM(possibleAppellation);
         CellariumUtil.sortClearBOM(possibleCepages);
-        //TextFields.bindAutoCompletion(fieldAppellation, possibleAppellation);
         TextFields.bindAutoCompletion(fieldCepages, possibleCepages);
         TextFields.bindAutoCompletion(fieldDomaine, possibleDomaines);
 

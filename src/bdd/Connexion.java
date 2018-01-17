@@ -1,8 +1,7 @@
 package bdd;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import classes.Wine;
+import java.sql.*;
 
 public class Connexion {
 
@@ -37,6 +36,23 @@ public class Connexion {
             System.out.println("Failed to make connection!");
         }
         return null;
+    }
+
+
+    private static Connection con;
+    public Connexion(){
+        con = connexionBDD();
+    }
+
+    public static void insertWine(Wine vin) throws SQLException {
+        executeStatement(vin.insertQuery());
+    }
+
+    public static ResultSet executeStatement(String sql) throws SQLException {
+        System.out.println(sql);
+        PreparedStatement pst = con.prepareStatement(sql);
+        System.out.println(pst);
+        return pst.executeQuery();
     }
 
 }

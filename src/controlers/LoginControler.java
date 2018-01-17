@@ -18,6 +18,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import classes.User;
+
 import static util.CellariumUtil.*;
 
 import java.io.IOException;
@@ -28,16 +29,17 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginControler {
 
+    private static int status = 0;
     @FXML
     private Label lblStatus;
-
     @FXML
     private JFXTextField textUsr;
-
     @FXML
     private JFXPasswordField textPwd;
 
-    private static int status = 0;
+    public static int getStatus() {
+        return status;
+    }
 
     @FXML
     public void login(ActionEvent event) throws IOException, SQLException {
@@ -73,9 +75,5 @@ public class LoginControler {
         theStage.hide();
 
         createNewStage("/fxml/addMember.fxml", "Inscription", false);
-    }
-
-    public static int getStatus() {
-        return status;
     }
 }
