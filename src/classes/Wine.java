@@ -23,8 +23,8 @@ public class Wine {
         this.couleur = couleur;
         this.cepage = cepage;
         this.degres=degres;
-
     }
+
     public String insertQuery() throws SQLException
     {
         return buildInsert(TABLE_VIN,
@@ -32,10 +32,7 @@ public class Wine {
                 VIN_DEGRES, Float.toString(degres),
                 VIN_IDAPP, Integer.toString(Attribut.getAppellationId(appellation)),
                 VIN_IDCEPAGE, Integer.toString(Attribut.getCepageId(cepage)),
-                VIN_IDDOMAINE, Integer.toString(Attribut.getCepageId(domaine)));
+                VIN_IDDOMAINE, Integer.toString(Attribut.getDomaineId(domaine)));
     }
-
-
-
 
 }
