@@ -37,6 +37,7 @@ public abstract class MapUtils {
         return coordinates;
     }
 
+    // Cette fonction de flemmard mdrrr
     public static String geolocalisationString() throws IOException, GeoIp2Exception {
         Double [] temp = geolocalisation();
 
