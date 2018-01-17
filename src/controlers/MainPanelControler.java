@@ -36,6 +36,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mapfoursquare.ParserFoursquare;
 
 public class MainPanelControler implements Initializable {
 
@@ -233,20 +234,6 @@ public class MainPanelControler implements Initializable {
     }
 
     public void testGeolocalisation(ActionEvent actionEvent) throws IOException, GeoIp2Exception {
-
-        URL whatismyip = new URL("http://checkip.amazonaws.com");
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                whatismyip.openStream()));
-
-        String ip = in.readLine(); //you get the IP as a String
-        System.out.println(ip);
-
-        File database = new File("GeoLite2-City.mmdb");
-        DatabaseReader dbReader = new DatabaseReader.Builder(database).build();
-        //InetAddress test = InetAddress.getByName("134.59.27.110");
-
-        CityResponse response = dbReader.city(InetAddress.getByName(ip));
-        System.out.println(response.getLocation().getLatitude());
-        System.out.println(response.getLocation().getLongitude());
+        CellariumUtil.createNewStage("/fxml/map.fxml", "Cave aux alentours", false);
     }
 }
