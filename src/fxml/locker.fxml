@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+
+
+<VBox xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: #5a5a5a;">
+         <children>
+            <Label text="nomCasier" textFill="WHITE">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Label>
+            <Circle fill="#fdeadb" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Label text="nbBlancs" textFill="WHITE" />
+            <Circle fill="#c00000" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Label text="nbRouges" textFill="WHITE" />
+            <Circle fill="#ff9b9b" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Label text="nbRoses" textFill="WHITE" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+         </padding>
+      </HBox>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+   </children>
+</VBox>
