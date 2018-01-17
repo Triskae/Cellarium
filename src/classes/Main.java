@@ -32,9 +32,10 @@ public class Main extends Application {
 
     }*/
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/mainPanel.fxml")));
         primaryStage.setTitle("Cellarium");
-        primaryStage.setScene(new Scene(root, AnchorPane.USE_COMPUTED_SIZE, AnchorPane.USE_COMPUTED_SIZE));
+        primaryStage.setScene(new Scene(root, 1300, 900));
+        //primaryStage.setScene(new Scene(root, AnchorPane.USE_COMPUTED_SIZE, AnchorPane.USE_COMPUTED_SIZE));
         primaryStage.show();
         primaryStage.getIcons().add(new Image("res/img/iconPanneauPrincipal.png"));
     }
