@@ -2,12 +2,12 @@ package controlers;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import mapfoursquare.MapUtils;
 import mapfoursquare.ParserFoursquare;
+import netscape.javascript.JSObject;
 
 
 public class MapControler implements Initializable, MapComponentInitializedListener {
@@ -33,7 +34,9 @@ public class MapControler implements Initializable, MapComponentInitializedListe
     private GoogleMap map;
     private Double lat = 43.6863732;
     private Double lng = 7.2329360000000005;
-    private Boolean demo = true;
+    private ParserFoursquare parserFoursquare;
+
+    private Boolean demo = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -45,9 +48,10 @@ public class MapControler implements Initializable, MapComponentInitializedListe
     @Override
     public void mapInitialized() {
 
-        ParserFoursquare parserFoursquare = new ParserFoursquare(demo);
+        parserFoursquare = new ParserFoursquare(demo);
         Result <VenuesSearchResult> result = null;
         ArrayList<LatLong> latLongList = new ArrayList<>();
+        ArrayList<String> info = new ArrayList<>();
 
         try {
             result = parserFoursquare.search();
@@ -64,7 +68,14 @@ public class MapControler implements Initializable, MapComponentInitializedListe
             for (CompactVenue venue : result.getResult().getVenues()) {
 
                 latLongList.add(new LatLong(venue.getLocation().getLat(), venue.getLocation().getLng()));
+                try {
+                    info.add(constructPOPUP(venue));
+                } catch (FoursquareApiException e) {
+                    e.printStackTrace();
+                }
             }
+
+// Nom, location, contact, Site web, price, rating, photos
 
             //Set the initial properties of the map.
             MapOptions mapOptions = new MapOptions();
@@ -87,28 +98,30 @@ public class MapControler implements Initializable, MapComponentInitializedListe
                     .rotateControl(false)
                     .scaleControl(false)
                     .streetViewControl(false)
-                    .zoomControl(false)
+                    .zoomControl(true)
                     .zoom(12);
 
             map = mapView.createMap(mapOptions);
 
             //Add markers to the map
 
-            for (LatLong ltlong : latLongList) {
+            for (int i = 0; i < latLongList.size(); i++) {
                 MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(ltlong);
+                markerOptions.position(latLongList.get(i));
+                markerOptions.animation(Animation.DROP);
                 Marker marker = new Marker(markerOptions);
                 map.addMarker(marker);
+
+                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                infoWindowOptions.content(info.get(i));
+                InfoWindow testWindow = new InfoWindow(infoWindowOptions);
+                testWindow.setOptions(infoWindowOptions);
+
+                map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
+                    testWindow.open(map, marker);
+                });
             }
 
-
-            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-            infoWindowOptions.content("<h2>Fred Wilkie</h2>"
-                    + "Current Location: Safeway<br>"
-                    + "ETA: 45 minutes");
-
-            /**InfoWindow fredWilkeInfoWindow = new InfoWindow(infoWindowOptions);
-             fredWilkeInfoWindow.open(map, fredWilkieMarker);**/
 
 
 
@@ -121,4 +134,41 @@ public class MapControler implements Initializable, MapComponentInitializedListe
 
     }
 
+        private String constructPOPUP(CompactVenue venue) throws FoursquareApiException {
+
+        String adresse = "Informations indisponibles (magasins probablement fermé définitivement)";
+        String url = "Informations indisponibles";
+        String prix = "Informations indisponibles";
+        String note = "Informations indisponibles";
+
+        if ( venue.getLocation().getAddress() != null && venue.getLocation().getPostalCode() != null && venue.getLocation().getCity() != null) {
+            adresse = venue.getLocation().getAddress()+" "+ venue.getLocation().getPostalCode()+" "+venue.getLocation().getCity();
+        }
+
+        if (venue.getUrl() != null) {
+            url = venue.getUrl();
+        }
+
+        if (venue.getPrice() != null) {
+            prix = venue.getUrl();
+        }
+
+        if (venue.getRating() != null) {
+            note = venue.getUrl();
+        }
+
+
+
+            String  ret = "<h2>"+ venue.getName() + "</h2>"
+                    + "Adresse : " + adresse + "<br>"
+                    + "Site web du vendeur : " + url + "<br>"
+                    + "Prix (1 = pas couteux, 4 = très couteux) : " + prix + "<br>"
+                    + "Note (sur 10) : " + note + "<br>"
+                    + parserFoursquare.getPhotosVenues(venue.getId());
+
+
+        return ret;
+
+
+        }
 }

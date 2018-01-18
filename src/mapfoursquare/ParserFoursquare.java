@@ -6,8 +6,11 @@ import com.maxmind.geoip2.model.CityResponse;
 import fi.foyt.foursquare.api.FoursquareApi;
 import fi.foyt.foursquare.api.FoursquareApiException;
 import fi.foyt.foursquare.api.Result;
+import fi.foyt.foursquare.api.entities.Photo;
+import fi.foyt.foursquare.api.entities.PhotoGroup;
 import fi.foyt.foursquare.api.entities.VenuesSearchResult;
 
+import javax.management.relation.RelationSupport;
 import javax.swing.text.html.parser.Parser;
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,6 +52,20 @@ public class ParserFoursquare {
     public Result<VenuesSearchResult> search() throws FoursquareApiException {
         return foursquareApi.venuesSearch(ll, "cave vin", 10, "checkin", null, null, null, null);
     }
+
+    public String getPhotosVenues (String venueId) throws FoursquareApiException {
+        Result<PhotoGroup> ret = foursquareApi.venuesPhotos(venueId, null, 3, 0);
+
+        System.out.println(ret);
+
+        String str = "";
+        for (Photo photo : ret.getResult().getItems()) {
+            str += "<img src=\"" + photo.getUrl() + "\n>";
+        }
+        return str;
+    }
+
+
 
     /**public Result<VenuesSearchResult> searchWithLocation(String ll) throws FoursquareApiException {
         return foursquareApi.venuesSearch(ll, "cave vin", 10, "checkin", null, null, null, null);
