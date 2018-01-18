@@ -8,6 +8,7 @@ import controlers.WebCamPreviewController;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -50,7 +51,10 @@ public class CellariumUtil {
         try {
             root = FXMLLoader.load(CellariumUtil.class.getResource(fxmlPath));
             primaryStage.setTitle(stageTitle);
-            primaryStage.setScene(new javafx.scene.Scene(root, width, height));
+            primaryStage.setScene(new Scene(root, width, height));
+            primaryStage.setMinWidth(width);
+            primaryStage.setMinHeight(830);
+            primaryStage.setMaximized(true);
             primaryStage.setResizable(resizable);
             primaryStage.show();
             return primaryStage;

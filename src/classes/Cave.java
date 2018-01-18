@@ -5,10 +5,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
 
 public class Cave {
 
-    private static ArrayList<LockerControler> casierControllers = new ArrayList<>();
+    private String caveName;
+    private String caveDescription;
+
+    private static ArrayList<Locker> lockers = new ArrayList<>();
     private static ObservableList<Bottle> listBottles;
     private static ObservableList<String> listNomBouteilles = FXCollections.observableArrayList();
     //FXCollections.observableArrayList("Château Le Mayne", "Château Micardis", "La Cave d'Augustin Florent", "Château l'Hirondelle", "Château Haut-Moulin", "Charlemagne", "Chanturgue", "Châteaugay");

@@ -5,6 +5,7 @@ import bdd.Password;
 import static util.QueryUtil.*;
 
 import java.sql.*;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +39,7 @@ public class User {
     // Regarde dans la base de données si le login / mdp est correct
     public static boolean login(String email,String mdp) throws SQLException {
         Connection con = Connexion.connexionBDD();
-        PreparedStatement pst = con.prepareStatement(buildSelect(TABLE_UTILISATEUR,"count(*) as c")+" where " + UTILISATEUR_EMAIL + " = '" + email + "'");
+        PreparedStatement pst = Objects.requireNonNull(con).prepareStatement(buildSelect(TABLE_UTILISATEUR,"count(*) as c")+" where " + UTILISATEUR_EMAIL + " = '" + email + "'");
         ResultSet rs=pst.executeQuery();
         rs.next();
         if(rs.getInt("c")>0)

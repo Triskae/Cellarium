@@ -1,36 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
 
 
-<VBox xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefWidth="460.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlers.LockerControler">
    <children>
-      <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: #5a5a5a;">
+      <VBox>
          <children>
-            <Label text="nomCasier" textFill="WHITE">
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
-            </Label>
-            <Circle fill="#fdeadb" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-            <Label text="nbBlancs" textFill="WHITE" />
-            <Circle fill="#c00000" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-            <Label text="nbRouges" textFill="WHITE" />
-            <Circle fill="#ff9b9b" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-            <Label text="nbRoses" textFill="WHITE" />
+            <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: #5a5a5a;">
+               <children>
+                  <JFXTextField fx:id="lockerName" focusColor="#405aa800" prefHeight="25.0" prefWidth="93.0" promptText="Nom casier" style="-fx-background-color: #fff;" unFocusColor="#4d4d4d00" />
+                  <Circle fill="#fdeadb" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Label fx:id="nbWhite" text="nbBlancs" textFill="WHITE" />
+                  <Circle fill="#c00000" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Label fx:id="nbRed" text="nbRouges" textFill="WHITE" />
+                  <Circle fill="#ff9b9b" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Label fx:id="nbRose" text="nbRoses" textFill="WHITE" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+               </padding>
+            </HBox>
          </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
+      </VBox>
+      <HBox fx:id="hboxLocker" layoutY="50.0" spacing="10.0" style="-fx-background-color: #d5d5d5;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <padding>
-            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </HBox>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
    </children>
-</VBox>
+   <effect>
+      <DropShadow color="#00000080" />
+   </effect>
+</AnchorPane>

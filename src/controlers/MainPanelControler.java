@@ -1,9 +1,12 @@
 package controlers;
 
 import classes.Cave;
+import classes.Locker;
 import com.github.sarxos.webcam.Webcam;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXMasonryPane;
+import com.jfoenix.controls.JFXTextField;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
@@ -17,10 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.web.WebView;
@@ -49,7 +49,7 @@ public class MainPanelControler implements Initializable {
     public Label cepages;
     public Label garde;
     public Label temp;
-    public WebView webView;
+    public JFXMasonryPane mansoryPane;
 
     @FXML
     private JFXListView<String> listView;
@@ -124,28 +124,6 @@ public class MainPanelControler implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainPanelControler.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        ficheBouteilles.setFont(Font.font("SanSerif"));
-
-        /*Font myFontloadFontAirstreamNF20 =
-                Font.loadFont(getClass()
-                        .getResourceAsStream("../res/font/OpenSans-Regular.ttf"), 16);
-
-        ficheBouteilles.setFont(myFontloadFontAirstreamNF20);
-        region.setFont(myFontloadFontAirstreamNF20);
-        appellationtype.setFont(myFontloadFontAirstreamNF20);
-        appellation.setFont(myFontloadFontAirstreamNF20);
-        couleur.setFont(myFontloadFontAirstreamNF20);
-        cepages.setFont(myFontloadFontAirstreamNF20);
-        garde.setFont(myFontloadFontAirstreamNF20);
-        temp.setFont(myFontloadFontAirstreamNF20);
-        lblRegion.setFont(myFontloadFontAirstreamNF20);
-        lblAppellationType.setFont(myFontloadFontAirstreamNF20);
-        lblAppellation.setFont(myFontloadFontAirstreamNF20);
-        lblCouleur.setFont(myFontloadFontAirstreamNF20);
-        lblCepages.setFont(myFontloadFontAirstreamNF20);
-        lblGarde.setFont(myFontloadFontAirstreamNF20);
-        lblTempService.setFont(myFontloadFontAirstreamNF20);*/
     }
 
     @FXML
@@ -206,11 +184,10 @@ public class MainPanelControler implements Initializable {
     }
 
     public void testAddCasier(ActionEvent actionEvent) throws IOException {
-        if(nbNodes == 5) {
+        if(nbNodes == 10) {
             CellariumUtil.displayJFXDialog(stackPane, "Attention !", "Vous ne pouvez plus ajouter de casier.", "Okay");
         } else {
-            //Pane test = FXMLLoader.load(getClass().getResource("classes/locker.fxml"));
-            hbox1.getChildren().add(new Circle(100));
+            mansoryPane.getChildren().add(new Locker());
             nbNodes++;
         }
     }
@@ -235,5 +212,9 @@ public class MainPanelControler implements Initializable {
 
     public void testGeolocalisation(ActionEvent actionEvent) throws IOException, GeoIp2Exception {
         CellariumUtil.createNewStage("/fxml/map.fxml", "Cave aux alentours", false);
+    }
+
+    public void testAddBottleLocker(ActionEvent actionEvent) {
+
     }
 }

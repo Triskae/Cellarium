@@ -83,11 +83,6 @@ public class AddMemberControler {
         Node source = (Node) ae.getSource();
         Window theStage = source.getScene().getWindow();
         theStage.hide();
-
-        Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
-        primaryStage.setTitle("Inscription");
-        primaryStage.setScene(new Scene(root, AnchorPane.USE_COMPUTED_SIZE, AnchorPane.USE_COMPUTED_SIZE));
-        primaryStage.show();
+        createNewStage("/fxml/login.fxml", "Inscription", false);
     }
 }

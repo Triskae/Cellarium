@@ -30,7 +30,7 @@
             <FontAwesomeIconView glyphName="PLUS" size="128" />
             <JFXTextField fx:id="fieldDomaine" focusColor="#14c7a300" promptText="Domaine" style="-fx-background-color: #f5f5f5;" unFocusColor="#ffffff00" />
             <JFXComboBox fx:id="fieldRegion" focusColor="#ff5722" onAction="#displayAppellation" prefHeight="25.0" prefWidth="558.0" promptText="Région" unFocusColor="BLACK" />
-            <JFXComboBox fx:id="fieldApp" disable="true" prefHeight="25.0" prefWidth="542.0" promptText="Appellation" />
+            <JFXComboBox fx:id="fieldApp" disable="true" focusColor="#ff5722" prefHeight="25.0" prefWidth="542.0" promptText="Appellation" unFocusColor="BLACK" />
             <JFXComboBox fx:id="fieldCouleur" focusColor="#ff5722" prefHeight="25.0" prefWidth="556.0" promptText="Couleur" unFocusColor="BLACK" />
             <JFXTextField fx:id="fieldCepages" focusColor="#14c7a300" promptText="Cépages" style="-fx-background-color: #f5f5f5;" unFocusColor="#ffffff00" />
             <JFXTextField fx:id="fieldDegre" focusColor="#14c7a300" promptText="Degré d'alcool" style="-fx-background-color: #f5f5f5;" unFocusColor="#ffffff00" />

@@ -22,4 +22,8 @@ public class DrawerControler {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
+    public void addLocker(MouseEvent mouseEvent) {
+
+    }
 }
